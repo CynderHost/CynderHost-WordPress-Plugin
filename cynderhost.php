@@ -1,26 +1,36 @@
 <?php
 
 /**
+ * The plugin bootstrap file
+ *
+ * This file is read by WordPress to generate the plugin information in the plugin
+ * admin area. This file also includes all of the dependencies used by the plugin,
+ * registers the activation and deactivation functions, and defines a function
+ * that starts the plugin.
+ *
  * @link              https://cynderhost.com
  * @since             1.0.0
- * @package           CynderHost
+ * @package           Cynderhost
  *
  * @wordpress-plugin
  * Plugin Name:       CynderHost
  * Plugin URI:        https://cynderhost.com
- * Description:       Provides an easy interface to clear the CynderHost CDN cache, both automatically and programmatically.
+ * Description:       Provides an easy interface to clear the CynderHost CDN cache.
  * Version:           1.0.3
  * Author:            CynderHost
  * Author URI:        https://cynderhost.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       cynderhost
+ * Domain Path:       /languages
  */
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
+
+
 
 
 define( 'CYNDERHOST_VERSION', '1.0.3' );
@@ -63,14 +73,14 @@ function purge_cynderhost($resp = false) {
  * Called to purge cache on updates and display status
  */
 function do_cache_cynderhost_purge($p = false){
-	 cy_set_admin_notice(purge_cynderhost($p));
+	 cynderhost_set_admin_notice(purge_cynderhost($p));
 }
 
 /**
  * Displays a notice with cache purge status
  */
-function cy_author_admin_notice(){
-	$v = cy_get_admin_notice();
+function cynderhost_author_admin_notice(){
+	$v = cynderhost_get_admin_notice();
 	if($v){
 		 echo '<div class="notice notice-info is-dismissible">
 				  <p>'. $v['message'] .'</p>
@@ -81,18 +91,18 @@ function cy_author_admin_notice(){
 /**
  * Sets admin notice trasients
  */
-function cy_set_admin_notice($message) {
-    set_transient('cy_message', [
+function cynderhost_set_admin_notice($message) {
+    set_transient('cynderhost_message', [
         'message' => $message
     ], 30);
 }
 /**
  * Gets and removes admin notice trasients
  */
-function cy_get_admin_notice() {
-    $transient = get_transient( 'cy_message' );
+function cynderhost_get_admin_notice() {
+    $transient = get_transient( 'cynderhost_message' );
 	if ($transient){
-    	delete_transient( 'cy_message' );
+    	delete_transient( 'cynderhost_message' );
 	}
     return $transient;
 }
@@ -100,13 +110,12 @@ function cy_get_admin_notice() {
 /**
  * Check if cache should be purged
  */
-function check_cache_purge(){
+function cynderhost_check_cache_purge(){
 	$q = $_GET['cynderhost_purgecache'];
-	if(isset($q) && $q == "true" && current_user_can('administrator')){
+	if(isset($q) && $q == "true" && current_user_can('administrator') && wp_verify_nonce( $_GET['nonce'], 'cynderhost_purgecache' ) )){
 		do_cache_cynderhost_purge(true);
 	}
 }
-
 /**
  * Add cache purge action hooks:
  * Post publish, update, or delete, Theme switch, Plugin activate or deactivate
@@ -118,8 +127,8 @@ add_action('switch_theme', 'do_cache_cynderhost_purge');
 add_action('activated_plugin', 'do_cache_cynderhost_purge');
 add_action('deactivated_plugin', 'do_cache_cynderhost_purge');
 add_action('deactivated_plugin', 'do_cache_cynderhost_purge');
-add_action('admin_notices', 'cy_author_admin_notice');
-add_action('wp_loaded', 'check_cache_purge');
+add_action('admin_notices', 'cynderhost_author_admin_notice');
+add_action('wp_loaded', 'cynderhost_check_cache_purge');
 
 
 /**
@@ -215,10 +224,10 @@ if ( is_admin() )
 /**
  * Register Cache Purge button in WP Admin bar
  */
-add_action('admin_bar_menu', 'cy_add_item', 100);
+add_action('admin_bar_menu', 'cynderhost_add_item', 100);
 
-function cy_add_item( $admin_bar ){
-  $url = add_query_arg("cynderhost_purgecache", "true");
+function cynderhost_add_item( $admin_bar ){
+  $url = add_query_arg("cynderhost_purgecache", "true", "nonce" => wp_create_nonce( 'cynderhost_purgecache' ));
   global $wp_admin_bar;
   $wp_admin_bar->add_menu( array( 'id'=>'cache-purge','title'=>'Cache Purge','href'=> "$url"));
 }
