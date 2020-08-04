@@ -12,7 +12,14 @@ Provides an easy interface to clear the CynderHost CDN cache automatically and m
 
 == Description ==
 
-Only compatible CynderHost high performance hosting websites. 
+This plugin is only compatible with functional sites hosted on CynderHost High Performance.
+
+This plugin will use the CynderHost HP API (https://api.cynderhost.com/high-performance/cache/cdn/purge/) to purge the cache automatically when a post is published, updated, or delete, and when a plugin is installed. This will also add a button to the admin interface allowing you to purge the cache manually.
+
+Use of this plugin requires acceptance of CynderHost's terms of service: https://cynderhost.com/terms-of-service
+As well as privacy policy: https://cynderhost.com/privacy-policy
+
+
 
 == Installation ==
 
