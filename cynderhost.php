@@ -47,7 +47,7 @@ function purge_cynderhost($resp = false) {
 	$cynderhost_cdn_settings_options = get_option( 'cynderhost_cdn_settings_option_name' ); // Array of All Options
   $api_key = $cynderhost_cdn_settings_options['api_key_0'];
 	//cache purge endpoint
-	$response = wp_remote_post( "http://api.cynderhost.com/high-performance/cache/cdn/purge/", array(
+	$response = wp_remote_post( "https://api.cynderhost.com/high-performance/cache/cdn/purge/", array(
 	    'method'      => 'POST',
 	    'timeout'     => 10,
 	    'redirection' => 5,
