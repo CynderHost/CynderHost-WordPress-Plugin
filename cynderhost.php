@@ -6,7 +6,7 @@
  * @package           CynderHost
  *
  * @wordpress-plugin
- * Plugin Name:       CynderHost
+ * Plugin Name:       CynderHost Cache
  * Plugin URI:        https://cynderhost.com
  * Description:       Provides an easy interface to clear the CynderHost CDN cache, both automatically and programmatically.
  * Version:           1.0.3
