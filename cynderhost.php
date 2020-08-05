@@ -1,22 +1,20 @@
 <?php
 
 /**
- *
  * @link              https://cynderhost.com
  * @since             1.0.0
- * @package           Cynderhost
+ * @package           CynderHost
  *
  * @wordpress-plugin
  * Plugin Name:       CynderHost
  * Plugin URI:        https://cynderhost.com
- * Description:       Provides an easy interface to clear the CynderHost CDN cache.
+ * Description:       Provides an easy interface to clear the CynderHost CDN cache, both automatically and programmatically.
  * Version:           1.0.3
  * Author:            CynderHost
- * Author URI:        https://cynderhost.com
+ * Author URI:        https://profiles.wordpress.org/cynderhost/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       cynderhost
- * Domain Path:       /languages
  */
 
 // If this file is called directly, abort.
@@ -106,7 +104,7 @@ function cynderhost_get_admin_notice() {
  */
 function cynderhost_check_cache_purge(){
 	$q = $_GET['cynderhost_purgecache'];
-	if(isset($q) && $q == "true" && current_user_can('administrator') && wp_verify_nonce( $_GET['nonce'], 'cynderhost_purgecache' ) )){
+	if( isset($q) && $q == "true" && current_user_can('administrator') && wp_verify_nonce( $_GET['nonce'], 'cynderhost_purgecache' ) ){
 		do_cache_cynderhost_purge(true);
 	}
 }
