@@ -219,7 +219,8 @@ if ( is_admin() )
 add_action('admin_bar_menu', 'cynderhost_add_item', 100);
 
 function cynderhost_add_item( $admin_bar ){
-  $url = add_query_arg("cynderhost_purgecache", "true", "nonce" => wp_create_nonce( 'cynderhost_purgecache' ));
+  $url = add_query_arg("cynderhost_purgecache", "true");
+	$url = add_query_arg("nonce", wp_create_nonce( 'cynderhost_purgecache' ), $url);
   global $wp_admin_bar;
   $wp_admin_bar->add_menu( array( 'id'=>'cache-purge','title'=>'Cache Purge','href'=> "$url"));
 }
