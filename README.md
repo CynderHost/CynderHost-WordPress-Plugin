@@ -1,13 +1,21 @@
 **This repository is deprecated. Please use the official WordPress.org plugin repository for updates and installation**
 
 === Plugin Name ===
+
 Contributors: CynderHost
+
 Donate link: https://cynderhost.com
+
 Tags: cache, performance, cynderhost
+
 Requires at least: 3.0.1
+
 Tested up to: 5.4.2
+
 Stable tag: 5.4.2
+
 License: GPLv2 or later
+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Provides an easy interface to clear the CynderHost CDN cache automatically and manually.
